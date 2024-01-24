@@ -7,7 +7,14 @@ import {
   uploadBytesResumable
 } from 'firebase/storage'
 import { app } from '../firebase'
-import { updateUserFailure, updateUserStart, updateUserSuccess } from '../redux/user/userSlice'
+import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  updateUserFailure,
+  updateUserStart,
+  updateUserSuccess
+} from '../redux/user/userSlice'
 
 export function Profile() {
   const fileRef = useRef(null)
@@ -32,7 +39,7 @@ export function Profile() {
     }
   }, [file])
 
-  const handleFileUpload = (file) => {
+  const handleFileUpload = file => {
     const storage = getStorage(app)
     const fileName = new Date().getTime() + file.name
     const storageRef = ref(storage, fileName)
@@ -63,7 +70,7 @@ export function Profile() {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault()
     try {
       dispatch(updateUserStart())
@@ -72,7 +79,7 @@ export function Profile() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       })
       const data = await res.json()
       if (data.success === false) {
@@ -83,6 +90,23 @@ export function Profile() {
       dispatch(updateUserSuccess(data))
     } catch (error) {
       dispatch(updateUserFailure(error.message))
+    }
+  }
+
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart())
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE'
+      })
+      const data = await res.json()
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.messages))
+        return
+      }
+      dispatch(deleteUserSuccess(data))
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message))
     }
   }
 
@@ -105,17 +129,16 @@ export function Profile() {
         />
         <p className='text-small self-center'>
           {fileUploadError ? (
-            <span className='text-red-700'>Error Image upload (image must be less than 2 mb)</span>
+            <span className='text-red-700'>
+              Error Image upload (image must be less than 2 mb)
+            </span>
           ) : filePerc > 0 && filePerc < 100 ? (
             <span className='text-slate-700'>{`Uploading ${filePerc}`}</span>
           ) : filePerc === 100 ? (
-              <span className='text-green-700'>
-                Image successfully uploaded!
-              </span>
+            <span className='text-green-700'>Image successfully uploaded!</span>
           ) : (
             ''
-          )
-        }
+          )}
         </p>
         <input
           type='text'
@@ -140,18 +163,24 @@ export function Profile() {
           className='border p-3 rounded-lg'
           onChange={handleChange}
         />
-        <button disabled={loading} className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
-          {
-            loading ? 'Loading...' : 'Update'
-          }
+        <button
+          disabled={loading}
+          className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
+          {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
       <div className='flex justify-between mt-5'>
-        <span className='text-red-700 cursor-pointer'>Delete account</span>
+        <span
+          onClick={handleDeleteUser}
+          className='text-red-700 cursor-pointer'>
+          Delete account
+        </span>
         <span className='text-red-700 cursor-pointer'>Sign out</span>
       </div>
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>
-      <p className='text-green-700 mt-5'>{updateSuccess ? 'User is updated successfully!' : ''}</p>
+      <p className='text-green-700 mt-5'>
+        {updateSuccess ? 'User is updated successfully!' : ''}
+      </p>
     </div>
   )
 }
