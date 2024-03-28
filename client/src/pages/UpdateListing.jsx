@@ -304,7 +304,7 @@ export const UpdateListing = () => {
               />
               <div className='flex flex-col items-center'>
                 <p>Regular price</p>
-                <span className='text-xs'>($ / months)</span>
+                <span className='text-xs'>($ / month)</span>
               </div>
             </div>
             {formData.offer && (
@@ -321,7 +321,7 @@ export const UpdateListing = () => {
                 />
                 <div className='flex flex-col items-center'>
                   <p>Discount price</p>
-                  <span className='text-xs'>($ / months)</span>
+                  <span className='text-xs'>($ / month)</span>
                 </div>
               </div>
             )}
