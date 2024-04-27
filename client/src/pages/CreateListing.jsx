@@ -26,8 +26,7 @@ export const CreateListing = () => {
     offer: false,
     parking: false,
     furnished: false
-  })
-  console.log(formData)
+  })  
   const [imageUploadError, setImageUploadError] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState(false)
