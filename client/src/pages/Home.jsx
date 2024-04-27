@@ -10,7 +10,6 @@ export const Home = () => {
   const [saleListings, setSaleListings] = useState([])
   const [rentListings, setRentListings] = useState([])
   SwiperCore.use([Navigation])
-  console.log(offerListings)
 
   useEffect(() => {
     const fetchOfferListings = async () => {
@@ -63,7 +62,7 @@ export const Home = () => {
         <Link
           to={'/search'}
           className='text-xs sm:text-sm text-blue-900 font-bold hover:underline'>
-          Lets get started
+          Let's get started
         </Link>
       </div>
 
@@ -89,7 +88,7 @@ export const Home = () => {
       </Swiper>
 
       {/* {listings results for offer, sale and rent} */}
-      <div className="max-w-6xl mx-auto p-1 flex flex-col gap-8 my-10">
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
         {
           offerListings && offerListings.length > 0 && (
             <div className="">
@@ -99,7 +98,7 @@ export const Home = () => {
                   Show more offers
                 </Link>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {
                   offerListings.map(listing => (
                     <ListingItem listing={listing} key={listing._id}/>
@@ -118,7 +117,7 @@ export const Home = () => {
                   Show more places for rent
                 </Link>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {
                   rentListings.map(listing => (
                     <ListingItem listing={listing} key={listing._id}/>
@@ -137,7 +136,7 @@ export const Home = () => {
                   Show more places for sale
                 </Link>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {
                   saleListings.map(listing => (
                     <ListingItem listing={listing} key={listing._id}/>
