@@ -55,7 +55,7 @@ export const Home = () => {
           place with ease
         </h1>
         <div className='text-gray-400 text-xs sm:text-sm'>
-          Johan Estate will help you find your home fast, easy and comfortable.
+          JGEstate will help you find your home fast, easy and comfortable.
           <br />
           We have a wide range of properties for you to choose from.
         </div>
